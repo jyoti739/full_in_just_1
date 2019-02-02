@@ -4,7 +4,8 @@ import {Menu}from 'semantic-ui-react'
 const Login = props =>{
     return(
         <div>
-            <div className = "segment" style = {{height : '200px', width : '200px', backgroundColor : "red"}}>
+						<div className = "segment" style = {{height : '200px', width : '200px', background : "transparent",
+					color : "blue"}}>
 						
 						</div>
         </div>
