@@ -1,7 +1,7 @@
 const express = require('express')
 const router =  express.Router()
 const mongoose = require('mongoose')
-
+const bcrypt = require('bcryptjs')
 const Users = require('../models/users')
 
 // extract users
@@ -25,9 +25,11 @@ router.post('/', (req, res, next)=>{
     const newUserData  = new Users({
          id : new mongoose.Types.ObjectId(),
          firstName : "jyoti1",
-         lastName : "luckie",
+				 lastName : "luckie",
+				 name : "luckie",
          phone : 8478234,
-         gmail : "jyoti@luckie1.com"
+         email : "jyoti@luckie1.com", 
+         password : "jyoti"
     })
     newUserData.save().then(result => res.status(200).json(newUserData))
     .catch(err => res.status(500).json({"error_message" : err}))
@@ -43,12 +45,38 @@ router.patch('/:id', (req, res, next) =>{
     .catch(err => res.status(500).json(err))
 })
 // delete a user
-router.delete('/id', (req, res, next) =>{
+router.delete('/:id', (req, res, next) =>{
     const id = req.params.id
     Users.remove({_id : id})
     .exec()
     .then(result => res.status(200).send("user is successfully removed from database"))
     .catch(err => res.status(500).send(err))
+})
+
+// register a user 
+router.post('/register', (req, res, next) =>{
+  Users.findOne({email : req.body.email}).then(user =>{
+      if(user){
+          return res.status(400).json({email : "User already exists!"})
+      }else{
+          const newUser = new Users({
+              name : req.body.name,
+              email : req.body.email,
+							password : req.body.password,
+							firstName : req.body.firstName,
+							lastName : req.body.lastName,
+							phone : req.body.phone
+          })
+          bcrypt.genSalt(10, (error, salt)=>{
+              bcrypt.hash(newUser.password, salt, (err, hash)=>{
+                if(err) {throw err;}
+                newUser.password = hash
+                newUser.save().then(user => res.json(user))
+                .catch(error => res.send(error))
+              })
+          })
+      }
+  })  
 })
 
 module.exports = router
