@@ -8,7 +8,8 @@ const body_parser = require('body-parser')
 const db = require('./config/keys').mongodbUri
 mongoose.connect(db, {useNewUrlParser : true}).then(_ => console.log("db connected"))
 .catch(err => console.log(err))
-
+// apply body parser middleware
+app.use(body_parser.urlencoded({extended : false})) 
 app.use(body_parser.json())
 app.use('/users', userRoutes)
 

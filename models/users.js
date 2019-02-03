@@ -7,7 +7,7 @@ const schema  = mongoose.Schema({
     dob : {type : Date, default : Date.now()},
     email : {type : String, required : true},
     phone : {type : Number, required : true},
-    password : {type : String, requried : true }
+    password : {type : String, deafault : true}
 })
 
 module.exports  = mongoose.model("Users", schema)

@@ -5,6 +5,7 @@ const bcrypt = require('bcryptjs')
 const Users = require('../models/users')
 const jwt = require("jsonwebtoken")
 const keys_from_config  = require('../config/keys').secret	
+const passport  = require('passport')
 
 // extract users
 router.get('/', (req, res, next) =>{
@@ -26,12 +27,12 @@ router.get('/:id', (req, res, next) =>{
 router.post('/', (req, res, next)=>{
     const newUserData  = new Users({
          id : new mongoose.Types.ObjectId(),
-         firstName : "jyoti1",
-				 lastName : "luckie",
-				 name : "luckie",
-         phone : 8478234,
-         email : "jyoti@luckie1.com", 
-         password : "jyoti"
+         firstName : req.body.firstName,
+				 lastName : req.body.lastName,
+				 name : req.body.name,
+         phone : req.body.phone,
+         email : req.body.email, 
+         password : req.body.password
     })
     newUserData.save().then(result => res.status(200).json(newUserData))
     .catch(err => res.status(500).json({"error_message" : err}))
@@ -108,5 +109,12 @@ router.post('/login', (req, res)=>{
 		})
 	})
 })
+// return the current user whoever the token belongs to
+//protected api using passport
+// @Desc return current user
+// Private
+router.get('/current', passport.authenticate('jwt', {session : false}, (req, res)=>{
+	res.json({message : "success"})
+}))
 
 module.exports = router
