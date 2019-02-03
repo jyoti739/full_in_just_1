@@ -78,5 +78,19 @@ router.post('/register', (req, res, next) =>{
       }
   })  
 })
+// @routes GET api/users/login
+routers.post('/login', (req, res)=>{
+	const email = req.body.email
+	const password = req.body.password
+
+	// find the user by email
+	Users.findOne({email}).then(user =>{
+		//check for the users 
+		if(!user){
+			return res.status(404).jsaon({"message" : "User is not found!"})
+		}//check password 
+		
+	})
+})
 
 module.exports = router
