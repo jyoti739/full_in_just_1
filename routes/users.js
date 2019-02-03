@@ -3,6 +3,8 @@ const router =  express.Router()
 const mongoose = require('mongoose')
 const bcrypt = require('bcryptjs')
 const Users = require('../models/users')
+const jwt = require("jsonwebtoken")
+const keys_from_config  = require('../config/keys').secret	
 
 // extract users
 router.get('/', (req, res, next) =>{
@@ -78,8 +80,8 @@ router.post('/register', (req, res, next) =>{
       }
   })  
 })
-// @routes GET api/users/login
-routers.post('/login', (req, res)=>{
+// @routes GET /users/login
+router.post('/login', (req, res)=>{
 	const email = req.body.email
 	const password = req.body.password
 
@@ -87,9 +89,23 @@ routers.post('/login', (req, res)=>{
 	Users.findOne({email}).then(user =>{
 		//check for the users 
 		if(!user){
-			return res.status(404).jsaon({"message" : "User is not found!"})
+			console.log(email)
+			return res.status(404).json({"message" : "User is not found!"})
 		}//check password 
-		
+		bcrypt.compare(password, user.password)
+		.then(match =>{
+			if(match){
+				// User method 
+				const payload = {id : user._id, name : user.name} // create a JWT Payload
+				//sign tokens
+				jwt.sign(payload, keys_from_config, {expiresIn : 20}, (err, token)=>{
+					res.json({success : true,
+					token : "Bearer " + token})
+				})  // 20 in seconds
+				console.log("this is ", password)
+				res.json({message : "success"})
+			}else res.status(400).json({"message" : "password is incorrect!"})
+		})
 	})
 })
 
