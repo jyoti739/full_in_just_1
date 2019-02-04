@@ -85,12 +85,12 @@ router.post('/register', (req, res, next) =>{
 router.post('/login', (req, res)=>{
 	const email = req.body.email
 	const password = req.body.password
-
+  console.log("password from upperside ", password)
 	// find the user by email
-	Users.findOne({email}).then(user =>{
+	Users.findOne({email : email}).then(user =>{
 		//check for the users 
 		if(!user){
-			console.log(email)
+			console.log(user)
 			return res.status(404).json({"message" : "User is not found!"})
 		}//check password 
 		bcrypt.compare(password, user.password)
@@ -100,8 +100,13 @@ router.post('/login', (req, res)=>{
 				const payload = {id : user._id, name : user.name} // create a JWT Payload
 				//sign tokens
 				jwt.sign(payload, keys_from_config, {expiresIn : 20}, (err, token)=>{
-					res.json({success : true,
-					token : "Bearer " + token})
+					res.json(
+						{
+							success : true,
+							token : "Bearer " + token
+						}
+					)
+					if(err) throw err;	
 				})  // 20 in seconds
 				console.log("this is ", password)
 				res.json({message : "success"})
@@ -117,4 +122,19 @@ router.get('/current', passport.authenticate('jwt', {session : false}, (req, res
 	res.json({message : "success"})
 }))
 
+
+
+//test to check fetch user matching by email
+router.post('/login1', (req, res) =>{
+	const email = req.body.email
+	const password = req.body.password
+	Users.findOne({email}).then(user => {
+		if(!user){
+			res.send("user is not found!")  //else res.send(user)
+		}
+		bcrypt.compare(password, user.password).then(match=>{
+			res.status(500).send(match)	
+		})
+	})
+})
 module.exports = router
