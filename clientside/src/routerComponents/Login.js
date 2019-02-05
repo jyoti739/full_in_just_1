@@ -1,5 +1,9 @@
 import React from 'react'
 import {Button, Form, Checkbox} from 'semantic-ui-react'
+import LoginStore from '../stores/loginStore'
+import LoginReducer from '../actions/loginReducer'
+import {connect} from 'react-redux'
+
 // import {}
 class Login extends React.Component{
   state = {
@@ -20,7 +24,7 @@ const Login_form = props => (
 	<Form style ={{backgroundColor : "grey", height : "250px", width : '500px',
 		borderRadius : "20px", margin : "90px 290px", padding : "auto"}}>
     <Form.Field style = {{marginTop : "50px", paddingTop : "40px"}}> 
-      <input placeholder='UserName' style = {{width : '400px'}}/>
+      <input placeholder='UserName' style = {{width : '400px'}} name  = "userName" value = "to be written"/>
     </Form.Field>
     <Form.Field>
       <input placeholder='password' style = {{width : '400px'}} />
@@ -38,7 +42,7 @@ const Register = props =>(
   <Form >
     <Form.Field style  = {{width : '400px', marginLeft : "200px", marginTop : "90px", 
     marginLeft :"430px", padding : "20px"}}>
-      <input placeholder = 'First Name' />
+      <input placeholder = 'First Name'  />
       <input placeholder = 'Last Name' />
       <input placeholder = 'password' />
       <input placeholder = 'phone' />
@@ -49,4 +53,4 @@ const Register = props =>(
       onClick = {props.onToggle}>here</a> to login</p>
   </Form>
 )
-export default Login
+export default connect(LoginStore, LoginReducer)(Login)
