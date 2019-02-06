@@ -8,9 +8,9 @@ import {Provider} from 'react-redux'
 import Login from './routerComponents/Login'
 import {createStore} from 'redux'
 
-const loginStore = createStore(LoginReducer)
+const store = createStore(LoginReducer)
 
-ReactDOM.render(<Provider store = {loginStore}><Login /></Provider>, document.getElementById('root'));
+ReactDOM.render(<Provider store = {store}><Login /></Provider>, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
