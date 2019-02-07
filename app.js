@@ -1,7 +1,7 @@
 const http = require('http')
 const express = require('express')
 const app  = require('./express_1')
-const path = requrie('path')
+const path = require('path')
 const server = http.createServer(app)
 
 
