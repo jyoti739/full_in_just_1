@@ -5,19 +5,31 @@ import Bag from '../routerComponents/bag'
 import Orders from '../routerComponents/orders'
 import Wishlist from '../routerComponents/wishlist'
 import Login from '../routerComponents/Login'
+import Links from './links'
 import {Route, Switch} from 'react-router-dom'
 
-export default class Main extends Component {
+import {connect} from 'react-redux'
+
+class Main extends Component {
   render() {
     return (
       <div>
+        <Route path = '/links' render ={() =>(this.props.loggedIn ? <Links /> : <Login />)} />
+        <Switch>
           <Route path = '/login' component = {Login} />
-          <Route path = '/profile' component = {Profile} />
-          <Route path = '/address' component = {Address} />
-          <Route path = '/bag' component = {Bag} />
-          <Route path = '/orders' component = {Orders} />
-          <Route path = '/wishlist' component = {Wishlist} />
+          <Route path = '/links/profile' component = {Profile} />
+          <Route path = '/links/address' component = {Address} />
+          <Route path = '/links/bag' component = {Bag} />
+          <Route path = '/links/orders' component = {Orders} />
+          <Route path = '/links/wishlist' component = {Wishlist} />
+        </Switch>
       </div>
     )
   }
 }
+const mapToStore = store =>{
+	return{
+		loggedIn : store.loggedIn
+	}
+}
+export default connect(mapToStore)(Main)

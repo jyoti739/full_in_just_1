@@ -1,6 +1,7 @@
 import React from 'react'
 import {Button, Form, Input} from 'semantic-ui-react'
 import {connect} from 'react-redux'
+import {NavLink} from 'react-router-dom'
 
 // import {}
 class Login extends React.Component{
@@ -15,7 +16,9 @@ class Login extends React.Component{
             password = {this.props.password} 
             onToggle = {this.props.onToggle}
             onInput = {this.props.onInput}
-            onLoginSubmit = {this.props.loginSubmit} /> :
+            onLoginSubmit = {this.props.loginSubmit}
+            loggedIn = {this.props.loggedIn}
+            onLoggedIn = {this.props.onLoggedIn} /> :
           <Register onToggle  = {this.props.onToggle}
           firstName = {this.props.firstName}
           onInput = {this.props.onInput} />
@@ -38,9 +41,9 @@ const LoginForm = props =>{
       <Checkbox label='I agree to the Terms and Conditions' />
     </Form.Field> */}
     <Button type='submit' style = {{marginLeft : '180px'}}
-        onClick = {props.onLoginSubmit}>Login</Button>
+        onClick = {props.onLoginSubmit} onClick = {props.onLoggedIn} to = '/links' as = {NavLink}>Login</Button>
     <p style = {{ marginLeft : "160px"}}>new to this site <a style = {{cursor : "pointer"}}
-      onClick = {props.onToggle}>Register</a></p>
+      onClick = {props.onToggle} >Register</a></p>
   </Form>
 )
   }
@@ -66,14 +69,16 @@ export const mapToStore = store =>{
       userName : store.userName,
       password : store.password,
       flag : store.flag,
-      firstName : store.firstName
+      firstName : store.firstName,
   }
 }
 export const mapToDispatch = dispatch =>{
   return{
     onToggle : () => dispatch({type : 'toggle'}),
     onInput : (event) => dispatch({type : "input", event}),
-    loginSubmit : () => dispatch({type : "loginSubmit"})
+    loginSubmit : () => dispatch({type : "loginSubmit"}),
+    onLoggedIn : () => dispatch({type : "check_login"})
+
  }
 }
 
