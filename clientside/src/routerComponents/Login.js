@@ -2,12 +2,23 @@ import React from 'react'
 import {Button, Form, Input} from 'semantic-ui-react'
 import {connect} from 'react-redux'
 
+import axios from 'axios'
+
 // import {}
 class Login extends React.Component{
   
   // onToggle = () =>{
   //   this.setState({flag : !this.state.flag})
   // }
+
+  onSubmit = (e) =>{
+    e.preventDefault()
+    const newUser = {
+      name : this.props.firstName
+    }
+  }
+
+
   render(){
     return(
       this.props.flag ?
@@ -55,8 +66,8 @@ const Register = props =>{
       <input placeholder = 'phone' />
       <input placeholder = 'email'/>
     </Form.Field>
-    <Button> Register </Button>
-    <p>click <a style = {{cursor : "pointer"}}
+    <Button style  =  {{marginLeft : "590px"}}> Register </Button>
+    <p style  =  {{marginLeft : "590px"}}>click <a style = {{cursor : "pointer"}}
       onClick = {props.onToggle}>here</a> to login</p>
   </Form>
 )

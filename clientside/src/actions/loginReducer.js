@@ -6,6 +6,8 @@ const initialState = {
 		flag : true,
 		firstName : "",
 		lastName : "",
+		phone : '',
+		email : '',
 		name : [],
 		loginFlag : false
 }
