@@ -27,12 +27,12 @@ const LoginForm = props =>{
 	<Form style ={{backgroundColor : "grey", height : "250px", width : '500px',
 		borderRadius : "20px", margin : "90px 290px", padding : "auto"}}>
     <Form.Field style = {{marginTop : "50px", paddingTop : "40px", marginLeft : "50px"}}> 
-      <input placeholder='UserName' style = {{width : '400px'}} name  = "userName" value = {props.userName}
+      <input placeholder='UserName' style = {{width : '400px'}} name  = "firstName" value = {props.firstName}
       onChange = {props.onInput} />
     </Form.Field>
     <Form.Field>
       <input placeholder='password' type = 'password' style = {{width : '400px', marginLeft: "50px"}} name = "password"
-        value = {props.password} onChange = {props.onInput  }/>
+        value = {props.password} onChange = {props.onInput}/>
     </Form.Field>
     {/* <Form.Field>
       <Checkbox label='I agree to the Terms and Conditions' />
@@ -72,7 +72,6 @@ export const mapToStore = store =>{
 export const mapToDispatch = dispatch =>{
   return{
     onToggle : () => dispatch({type : 'toggle'}),
-    loginInput : (event) => dispatch({type : 'login', event}),
     onInput : (event) => dispatch({type : "input", event}),
     loginSubmit : () => dispatch({type : "loginSubmit"})
  }
