@@ -38,7 +38,7 @@ app.get('/a', (req, res) =>{
 // Serve static assets if it is in production
 if(process.env.NODE_ENV === 'production'){
     //set static folder
-    app.use(app.static('clientside/build'))
+    app.use(express.static('clientside/build'))
     app.get('*', (req, res)=>{
         res.sendFile(path.resolve(__dirname, 'clientside', 'build', 'index.html'))
     })
