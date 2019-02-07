@@ -37,7 +37,9 @@ const LoginReducer = (state  = initialState, action) =>{
 								console.log("user is verified!")
 								return{
 									...state,
-									loginFlag : !state.loginFlag
+									loginFlag : !state.loginFlag,
+									firstName : '',
+									password : ''
 								}
 							}  // wrong as it only works for first username only for second, 
 							//as the first name does not match, so return else part, which shpould not be the case, else return{...state}
@@ -45,6 +47,7 @@ const LoginReducer = (state  = initialState, action) =>{
 					}).then(data => {
 						if(data.loginFlag){
 							console.log("go to the home page!")
+
 						}else console.log("username is invalid")
 					})
 					

@@ -1,15 +1,18 @@
 import React from 'react'
 import {Menu} from 'semantic-ui-react'
 
+
+const EditProfile = () =>{
+    return(
+        <div>
+            
+        </div>
+    )
+}
 const Profile = _ => {
-  return (
+  return (			
     <div>
-        <Menu>
-            <Menu.Field>
-                <h2>This is from profile page</h2>
-            </Menu.Field>
-        </Menu>
-        
+        <h2>this is from profile page</h2>
     </div>
   )
 }
