@@ -2,7 +2,7 @@ import axios from 'axios'
 
 const initialState = {
     userName : [],
-    password  : "jy",
+    password  : "",
 		flag : true,
 		firstName : "",
 		lastName : "",
