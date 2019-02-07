@@ -1,9 +1,11 @@
 const express = require('express')
 const app = express()
+const path  = require('path')
 const mongoose = require('mongoose')
 const userRoutes = require('./routes/users')
 const body_parser = require('body-parser')
 const passport = require('passport')
+
 //connect to mongodb 
 const db = require('./config/keys').mongodbUri
 mongoose.connect(db, {useNewUrlParser : true}).then(_ => console.log("db connected"))
@@ -33,5 +35,15 @@ require('./config/passport')(passport)
 app.get('/a', (req, res) =>{
     res.send("jyoti")
 })
+// Serve static assets if it is in production
+if(process.env.NODE_ENV === 'production'){
+    //set static folder
+    app.use(app.static('clientside/build'))
+    app.get('*', (req, res)=>{
+        res.sendFile(path.resolve(__dirname, 'clientside', 'build', 'index.html'))
+    })
+}
+const port = process.env.PORT || 5000
+app.listen(port, () => console.log("port is listening at ", port ))
 
-module.exports = app
+// module.exports = app

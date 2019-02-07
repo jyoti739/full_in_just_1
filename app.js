@@ -14,6 +14,6 @@ if(process.env.NODE_ENV === 'production'){
         res.sendFile(path.resolve(__dirname, 'clientside', 'build', 'index.html'))
     })
 }
-const port = process.env.PORT || 5000
-server.listen(port, () => console.log("port is listening at ", port ))
+// const port = process.env.PORT || 5000
+// server.listen(port, () => console.log("port is listening at ", port ))
 
