@@ -4,9 +4,11 @@ import Profile from '../routerComponents/profile'
 import Bag from '../routerComponents/bag'
 import Orders from '../routerComponents/orders'
 import Wishlist from '../routerComponents/wishlist'
+import { LoginForm } from '../routerComponents/Login'
 import Login from '../routerComponents/Login'
 import Links from './links'
 import {Route, Switch} from 'react-router-dom'
+import {Register} from '../routerComponents/Login'
 
 import {connect} from 'react-redux'
 
@@ -14,7 +16,8 @@ class Main extends Component {
   render() {
     return (
       <div>
-        <Route path = '/links' render ={() =>(this.props.loggedIn ? <Links /> : <Login />)} />
+        <Route exact path = '/links' render ={() =>(this.props.loggedIn ? <Links /> : <Login />)} />
+				<Route exact path = '/register' component = {Register} />
         <Switch>
           <Route path = '/login' component = {Login} />
           <Route path = '/links/profile' component = {Profile} />
