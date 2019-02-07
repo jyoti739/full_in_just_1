@@ -12,11 +12,25 @@ class Login extends React.Component{
   //   this.setState({flag : !this.state.flag})
   // }
 
-  onSubmit = (e) =>{
+
+  onRegister = (e) =>{
     e.preventDefault()
     const newUser = {
-      name : this.props.firstName
+      firstName : this.props.firstName,
+      lastName : this.props.lastName,
+      password : this.props.password,
+      phone : this.props.phone,
+      email : this.props.email
     }
+    axios.post('/users/register', newUser).then(res => console.log(res.data)).catch(err  => console.log(err))
+  }
+
+  onSuccessLogin = () =>{
+        const user = {
+          email : this.props.email,
+          password : this.props.password
+        }
+      axios.post('/users/login', user).then(res => console.log(res.data)).catch(err =>console.log(err.response.data))    
   }
 
 
@@ -31,17 +45,18 @@ class Login extends React.Component{
             loggedIn = {this.props.loggedIn}
             onLoggedIn = {this.props.onLoggedIn} /> :
           <Register onToggle  = {this.props.onToggle}
-          firstName = {this.props.firstName}
-          onInput = {this.props.onInput} />
+                    onRegister = {this.onRegister}  
+                    firstName = {this.props.firstName}
+                    onInput = {this.props.onInput} />
     )}
 }
 
-const LoginForm = props =>{
+export const LoginForm = props =>{
   return( 
 	<Form style ={{backgroundColor : "grey", height : "250px", width : '500px',
 		borderRadius : "20px", margin : "90px 290px", padding : "auto"}}>
     <Form.Field style = {{marginTop : "50px", paddingTop : "40px", marginLeft : "50px"}}> 
-      <input placeholder='UserName' style = {{width : '400px'}} name  = "firstName" value = {props.firstName}
+      <input placeholder='email' style = {{width : '400px'}} name  = "email" value = {props.email}
       onChange = {props.onInput} />
     </Form.Field>
     <Form.Field>
@@ -54,22 +69,22 @@ const LoginForm = props =>{
     <Button type='submit' style = {{marginLeft : '180px'}}
         onClick = {props.onLoginSubmit} onClick = {props.onLoggedIn} to = '/links' as = {NavLink}>Login</Button>
     <p style = {{ marginLeft : "160px"}}>new to this site <a style = {{cursor : "pointer"}}
-      onClick = {props.onToggle} >Register</a></p>
+      onClick = {props.onToggle} to = '/register' as = {NavLink}>Register</a></p>
   </Form>
 )
   }
-const Register = props =>{
+export const Register = props =>{
   return(
   <Form >
     <Form.Field style  = {{width : '400px', marginTop : "90px", 
       marginLeft :"430px", padding : "20px"}}>
-      <input placeholder = 'First Name' name = "firstName" value ={props.userName} onChange = {props.onInput} />
-      <input placeholder = 'Last Name' />
-      <input placeholder = 'password' />
-      <input placeholder = 'phone' />
-      <input placeholder = 'email'/>
+      <input placeholder = 'First Name' name = "firstName" value ={props.firstName} onChange = {props.onInput} />
+      <input placeholder = 'Last Name' name = "lastName" value ={props.lastName} onChange = {props.onInput}/>
+      <input placeholder = 'password' name = "password" value ={props.password} onChange = {props.onInput} />
+      <input placeholder = 'phone' name = "phone" value ={props.phone} onChange = {props.onInput}/>
+      <input placeholder = 'email' name = "email" value ={props.email} onChange = {props.onInput}/>
     </Form.Field>
-    <Button style  =  {{marginLeft : "590px"}}> Register </Button>
+    <Button style  =  {{marginLeft : "590px"}} onClick = {props.onRegister}> Register </Button>
     <p style  =  {{marginLeft : "590px"}}>click <a style = {{cursor : "pointer"}}
       onClick = {props.onToggle}>here</a> to login</p>
   </Form>
@@ -81,6 +96,9 @@ export const mapToStore = store =>{
       password : store.password,
       flag : store.flag,
       firstName : store.firstName,
+      lastName : store.lastName,
+      phone : store.phone,
+      email : store.email
   }
 }
 export const mapToDispatch = dispatch =>{

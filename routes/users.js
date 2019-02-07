@@ -23,25 +23,25 @@ router.get('/:id', (req, res, next) =>{
     }).catch(err => res.status(500).send(err))
 })
 
-//  add a user to the database 
-router.post('/', (req, res, next)=>{
-    const newUserData  = new Users({
-         id : new mongoose.Types.ObjectId(),
-         firstName : req.body.firstName,
-				 lastName : req.body.lastName,
-				 name : req.body.name,
-         phone : req.body.phone,
-         email : req.body.email, 
-         password : req.body.password
-    })
-    newUserData.save().then(result => res.status(200).json(newUserData))
-    .catch(err => res.status(500).json({"error_message" : err}))
-})
+//  add a user to the database (not now as we can only add user by registering only )
+// router.post('/', (req, res, next)=>{
+//     const newUserData  = new Users({
+//          id : new mongoose.Types.ObjectId(),
+//          firstName : req.body.firstName,
+// 				 lastName : req.body.lastName,
+// 				 name : req.body.name,
+//          phone : req.body.phone,
+//          email : req.body.email, 
+//          password : req.body.password
+//     })
+//     newUserData.save().then(result => res.status(200).json(newUserData))
+//     .catch(err => res.status(500).json({"error_message" : err}))
+// })
 // update/ patch to a user
 router.patch('/:id', (req, res, next) =>{
     const id = req.params.id
     const edit_ops = {}
-    for(const ops of req.params.body){
+    for(const ops of req.body){
         edit_ops[ops.key] = ops.edited_value
     }
     Users.update({_id : id}, {$set : edit_ops}).exec().then(result => res.status(201).json(result))
@@ -137,4 +137,4 @@ router.post('/login1', (req, res) =>{
 		})
 	})
 })
-module.exports = router
+module.exports = router	
